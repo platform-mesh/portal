@@ -1,0 +1,27 @@
+## ignore everything
+**
+
+## positive list the required files
+
+## ui
+!frontend/src
+!frontend/package.json
+!frontend/package-lock.json
+!frontend/angular.json
+!frontend/tsconfig.json
+!frontend/tsconfig.app.json
+!frontend/build-scripts/extract-versions.js
+
+## server
+!backend/src
+!backend/package.json
+!backend/package-lock.json
+!backend/tsconfig.build.json
+!backend/tsconfig.json
+!backend/nest-cli.json
+
+## root
+!.npmrc
+!tsconfig.base.json
+!package.json
+!package-lock.json

@@ -1,0 +1,9 @@
+version = 1
+SPDX-PackageName = "portal"
+SPDX-PackageDownloadLocation = "https://github.com/platform-mesh/portal"
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and Platform Mesh contributors and portal contributors."
+SPDX-License-Identifier = "Apache-2.0"
