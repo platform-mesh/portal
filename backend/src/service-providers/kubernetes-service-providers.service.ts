@@ -4,46 +4,54 @@ import {
   ServiceProviderService,
 } from '@openmfp/portal-server-lib';
 import { KubeConfig, CustomObjectsApi } from '@kubernetes/client-node';
+import { PromiseMiddlewareWrapper } from '@kubernetes/client-node/dist/gen/middleware.js';
 
 export class KubernetesServiceProvidersService
-  implements ServiceProviderService
+    implements ServiceProviderService
 {
   private k8sApi: CustomObjectsApi;
+  private baseUrl: URL;
 
   constructor() {
     const kc = new KubeConfig();
     kc.loadFromDefault();
+    this.baseUrl = new URL(kc.getCurrentCluster()?.server || '');
     this.k8sApi = kc.makeApiClient(CustomObjectsApi);
   }
 
   async getServiceProviders(
-    token: string,
-    entities: string[],
-    context: Record<string, any>
+      token: string,
+      entities: string[],
+      context: Record<string, any>
   ): Promise<ServiceProviderResponse> {
     const entity = !entities || !entities.length ? 'main' : entities[0];
 
+    let response;
     try {
-      const response = await this.k8sApi.listClusterCustomObject({
-        group: 'core.openmfp.io',
-        version: 'v1alpha1',
-        plural: 'contentconfigurations',
-        labelSelector: `portal.openmfp.org/entity=${entity}`,
-      });
+      response = await this.getKubernetesResources(entity, context);
+    } catch (error) {
+      console.error(error);
 
-      if (!response.items) {
-        return {
-          rawServiceProviders: [],
-        };
+      if (error.code == 429 || error.statusCode == 429) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        console.log('Retry after 1 second reading kubernetes resources.');
+        response = await this.getKubernetesResources(entity, context);
       }
+    }
 
-      const responseItems = response.items as any[];
+    if (!response.items) {
+      return {
+        rawServiceProviders: [],
+      };
+    }
 
-      let contentConfigurations = responseItems
+    const responseItems = response.items as any[];
+
+    let contentConfigurations = responseItems
         .filter((item) => !!item.status.configurationResult)
         .map((item) => {
           const contentConfiguration = JSON.parse(
-            item.status.configurationResult
+              item.status.configurationResult
           ) as ContentConfiguration;
           if (!contentConfiguration.url) {
             contentConfiguration.url = item.spec.remoteConfiguration?.url;
@@ -51,18 +59,47 @@ export class KubernetesServiceProvidersService
           return contentConfiguration;
         });
 
-      return {
-        rawServiceProviders: [
-          {
-            name: 'openmfp-system',
-            displayName: '',
-            creationTimestamp: '',
-            contentConfiguration: contentConfigurations,
+    return {
+      rawServiceProviders: [
+        {
+          name: 'openmfp-system',
+          displayName: '',
+          creationTimestamp: '',
+          contentConfiguration: contentConfigurations,
+        },
+      ],
+    };
+  }
+
+  private async getKubernetesResources(
+      entity: string,
+      requestContext: Record<string, any>
+  ) {
+    const gvr = {
+      group: 'core.openmfp.io',
+      version: 'v1alpha1',
+      plural: 'contentconfigurations',
+      labelSelector: `portal.openmfp.org/entity=${entity}`,
+    };
+    return await this.k8sApi.listClusterCustomObject(gvr, {
+      middleware: [
+        new PromiseMiddlewareWrapper({
+          pre: async (context) => {
+            const url = new URL(context.getUrl());
+
+            let path = `${this.baseUrl.pathname}/clusters/root:orgs:${requestContext.organization}`;
+            if (requestContext?.account) {
+              path += `:${requestContext.account}`; // FIXME: how are nested accounts and paths handled in the portal?
+            }
+            path += `/apis/${gvr.group}/${gvr.version}/${gvr.plural}`;
+
+            url.pathname = path;
+            context.setUrl(url.toString());
+            return context;
           },
-        ],
-      };
-    } catch (error) {
-      console.error(error);
-    }
+          post: async (context) => context,
+        }),
+      ],
+    });
   }
 }
