@@ -20,6 +20,10 @@ export class AccountEntityContextProvider implements EntityContextProvider {
         'gardener_project_list',
         'gardener_shoot_create',
         'gardener_shoot_list',
+        'iamAdmin',
+        'projectAdmin',
+        'projectMember',
+        'providerAdmin',
       ],
     };
   }

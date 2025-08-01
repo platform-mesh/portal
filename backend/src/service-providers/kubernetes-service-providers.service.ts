@@ -7,7 +7,7 @@ import { KubeConfig, CustomObjectsApi } from '@kubernetes/client-node';
 import { PromiseMiddlewareWrapper } from '@kubernetes/client-node/dist/gen/middleware.js';
 
 export class KubernetesServiceProvidersService
-    implements ServiceProviderService
+  implements ServiceProviderService
 {
   private k8sApi: CustomObjectsApi;
   private baseUrl: URL;
@@ -20,9 +20,9 @@ export class KubernetesServiceProvidersService
   }
 
   async getServiceProviders(
-      token: string,
-      entities: string[],
-      context: Record<string, any>
+    token: string,
+    entities: string[],
+    context: Record<string, any>
   ): Promise<ServiceProviderResponse> {
     const entity = !entities || !entities.length ? 'main' : entities[0];
 
@@ -48,16 +48,16 @@ export class KubernetesServiceProvidersService
     const responseItems = response.items as any[];
 
     let contentConfigurations = responseItems
-        .filter((item) => !!item.status.configurationResult)
-        .map((item) => {
-          const contentConfiguration = JSON.parse(
-              item.status.configurationResult
-          ) as ContentConfiguration;
-          if (!contentConfiguration.url) {
-            contentConfiguration.url = item.spec.remoteConfiguration?.url;
-          }
-          return contentConfiguration;
-        });
+      .filter((item) => !!item.status.configurationResult)
+      .map((item) => {
+        const contentConfiguration = JSON.parse(
+          item.status.configurationResult
+        ) as ContentConfiguration;
+        if (!contentConfiguration.url) {
+          contentConfiguration.url = item.spec.remoteConfiguration?.url;
+        }
+        return contentConfiguration;
+      });
 
     return {
       rawServiceProviders: [
@@ -72,8 +72,8 @@ export class KubernetesServiceProvidersService
   }
 
   private async getKubernetesResources(
-      entity: string,
-      requestContext: Record<string, any>
+    entity: string,
+    requestContext: Record<string, any>
   ) {
     const gvr = {
       group: 'core.openmfp.io',
