@@ -19,21 +19,19 @@ export class ContentConfigurationServiceProvidersService
     private vsGatewayBaseUrl: string;
 
     constructor() {
+        // TODO:FIXME: there must be a better way to get the base URL
         const gatewayUrl = process.env.OPENMFP_PORTAL_CONTEXT_CRD_GATEWAY_API_URL;
         this.vsGatewayBaseUrl = gatewayUrl.split('/').slice(0, -2).join('/') + `/virtual-workspace/contentconfigurations`
     }
 
-    async getServiceProviders(
-        token: string,
-        entities: string[],
-        context: Record<string, any>
-    ): Promise<ServiceProviderResponse> {
+    async getServiceProviders( token: string, entities: string[], context: Record<string, any>):
+        Promise<ServiceProviderResponse> {
+
         let path = `/root:orgs:${context.organization}`;
         if (context?.account) {
             path += `:${context.account}`;
         }
-        const gatewayPath = `${this.vsGatewayBaseUrl}${path}/graphql`
-        const client = new GraphQLClient(gatewayPath, {
+        const client = new GraphQLClient(`${this.vsGatewayBaseUrl}${path}/graphql`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -45,7 +43,8 @@ export class ContentConfigurationServiceProvidersService
 
         const entity = !entities || !entities.length ? 'main' : entities[0];
         let contentConfigurations = response.core_openmfp_io.ContentConfigurations
-            .filter((item) => item.metadata.labels?.["portal.openmfp.org/entity"] === entity
+            .filter((item) =>
+                item.metadata.labels?.["portal.openmfp.org/entity"] === entity
             )
             .map((item) => {
                 const contentConfiguration = JSON.parse(
