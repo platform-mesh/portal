@@ -42,8 +42,9 @@ export class ContentConfigurationServiceProvidersService
         if (context?.account) {
             path += `:${context.account}`;
         }
-        
-        const client = new GraphQLClient(`${this.vsGatewayBaseUrl}${path}/graphql`, {
+
+        const url = `${this.vsGatewayBaseUrl}${path}/graphql`.replace('${org-subdomain}', '')
+        const client = new GraphQLClient(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
