@@ -4,8 +4,11 @@ import {
   PortalOptions,
   providePortal,
 } from '@openmfp/portal-ui-lib';
+import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
 
-const portalOptions: PortalOptions = {};
+const portalOptions: PortalOptions = {
+  staticSettingsConfigService: PMStaticSettingsConfigService,
+};
 
 bootstrapApplication(PortalComponent, {
   providers: [providePortal(portalOptions)],
