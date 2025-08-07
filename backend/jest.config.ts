@@ -8,6 +8,7 @@ module.exports = {
   testRegex: '.spec.ts$',
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: './coverage',
+  passWithNoTests: true,
   resolver: '<rootDir>/../jest-custom-resolver.cjs',
   moduleNameMapper: {
     '^@openmfp/portal-server-lib$':
