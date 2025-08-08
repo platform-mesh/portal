@@ -31,7 +31,7 @@ export class NodeChangeHookConfigServiceImpl
     let node: PortalLuigiNode | undefined = nextNode;
     do {
       const id = node.context?.entityContext?.account?.id;
-      if (id) {
+      if (id && !entityKcpPath.includes(id)) {
         entityKcpPath = `:${id}${entityKcpPath}`;
       }
       node = node.parent;
