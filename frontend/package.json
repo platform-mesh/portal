@@ -34,7 +34,7 @@
     "@luigi-project/core": "^2.21.2",
     "@luigi-project/plugin-auth-oauth2": "^2.21.2",
     "@openmfp/portal-ui-lib": "0.165.0",
-    "@ui5/webcomponents-ngx": "0.4.8",
+    "@ui5/webcomponents-ngx": "0.5.4",
     "jmespath": "0.16.0",
     "jwt-decode": "^4.0.0",
     "lodash": "4.17.21",
