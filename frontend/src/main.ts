@@ -9,6 +9,7 @@ import {
   PortalOptions,
   providePortal,
 } from '@openmfp/portal-ui-lib';
+import { HeaderBarConfigServiceImpl } from './app/services/header-bar-config.service';
 
 const portalOptions: PortalOptions = {
   staticSettingsConfigService: PMStaticSettingsConfigService,
@@ -17,6 +18,7 @@ const portalOptions: PortalOptions = {
   nodeContextProcessingService: NodeContextProcessingServiceImpl,
   luigiExtendedGlobalContextConfigService:
     LuigiExtendedGlobalContextConfigServiceImpl,
+  headerBarConfigService: HeaderBarConfigServiceImpl,
 };
 
 bootstrapApplication(PortalComponent, {
