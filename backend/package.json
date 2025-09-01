@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^10.4.6",
     "@nestjs/serve-static": "^4.0.0",
     "@openmfp/portal-server-lib": "0.157.0",
+    "@platform-mesh/portal-server-lib": "^0.2.0",
     "axios": "^1.6.3",
     "class-validator": "^0.14.1",
     "cookie-parser": "1.4.7",

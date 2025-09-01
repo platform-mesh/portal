@@ -1,15 +1,20 @@
-import { CustomGlobalNodesServiceImpl } from './app/services/custom-global-nodes.service';
-import { LuigiExtendedGlobalContextConfigServiceImpl } from './app/services/luigi-extended-global-context-config.service';
-import { NodeChangeHookConfigServiceImpl } from './app/services/node-change-hook-config.service';
-import { NodeContextProcessingServiceImpl } from './app/services/node-context-processing.service';
+import { routes } from './app/app.routes';
 import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
 import {
   PortalComponent,
   PortalOptions,
   providePortal,
 } from '@openmfp/portal-ui-lib';
-import { HeaderBarConfigServiceImpl } from './app/services/header-bar-config.service';
+import { organizationInitializer } from '@platform-mesh/portal-ui-lib/organization';
+import {
+  CustomGlobalNodesServiceImpl,
+  HeaderBarConfigServiceImpl,
+  LuigiExtendedGlobalContextConfigServiceImpl,
+  NodeChangeHookConfigServiceImpl,
+  NodeContextProcessingServiceImpl,
+} from '@platform-mesh/portal-ui-lib/portal-options';
 
 const portalOptions: PortalOptions = {
   staticSettingsConfigService: PMStaticSettingsConfigService,
@@ -22,5 +27,9 @@ const portalOptions: PortalOptions = {
 };
 
 bootstrapApplication(PortalComponent, {
-  providers: [providePortal(portalOptions)],
+  providers: [
+    provideRouter(routes),
+    organizationInitializer(),
+    providePortal(portalOptions),
+  ],
 }).catch((err) => console.error(err));

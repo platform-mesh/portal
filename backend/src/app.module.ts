@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
-import * as path from 'node:path';
-import { AccountEntityContextProvider } from './entity-context-provider/account-entity-context-provider.service.js';
-import { OpenmfpPortalContextService } from './portal-context-provider/openmfp-portal-context.service.js';
-import { RequestContextProviderImpl } from './request-context-provider/openmfp-request-context-provider.js';
-import { ContentConfigurationServiceProvidersService } from './service-providers/content-configuration-service-providers.service.js';
+import {
+  AccountEntityContextProvider,
+  ContentConfigurationServiceProvidersService,
+  OpenmfpPortalContextService,
+  RequestContextProviderImpl,
+} from '@platform-mesh/portal-server-lib/portal-options';
 import { config } from 'dotenv';
+import * as path from 'node:path';
 
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
