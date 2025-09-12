@@ -5,6 +5,8 @@ import {
   ContentConfigurationServiceProvidersService,
   OpenmfpPortalContextService,
   RequestContextProviderImpl,
+  AuthCallbackProvider,
+  IAMGraphQlService,
 } from '@platform-mesh/portal-server-lib/portal-options';
 import { config } from 'dotenv';
 import * as path from 'node:path';
@@ -28,8 +30,11 @@ const portalOptions: PortalModuleOptions = {
   additionalProviders: [
     AccountEntityContextProvider,
     OpenmfpPortalContextService,
+    IAMGraphQlService,
+    RequestContextProviderImpl,
   ],
   serviceProviderService: ContentConfigurationServiceProvidersService,
+  authCallbackProvider: AuthCallbackProvider,
 };
 
 @Module({
