@@ -29,6 +29,11 @@
               "src/assets",
               {
                 "glob": "**",
+                "input": "node_modules/@platform-mesh/portal-ui-lib/assets/",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**",
                 "input": "node_modules/@openmfp/portal-ui-lib/assets/",
                 "output": "/assets/"
               },
