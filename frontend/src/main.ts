@@ -7,7 +7,6 @@ import {
   PortalOptions,
   providePortal,
 } from '@openmfp/portal-ui-lib';
-import { organizationInitializer } from '@platform-mesh/portal-ui-lib/organization';
 import {
   CustomGlobalNodesServiceImpl,
   HeaderBarConfigServiceImpl,
@@ -29,7 +28,6 @@ const portalOptions: PortalOptions = {
 bootstrapApplication(PortalComponent, {
   providers: [
     provideRouter(routes),
-    organizationInitializer(),
     providePortal(portalOptions),
   ],
 }).catch((err) => console.error(err));
