@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
 import {
   AccountEntityContextProvider,
-  ContentConfigurationServiceProvidersService,
-  OpenmfpPortalContextService,
-  RequestContextProviderImpl,
   AuthCallbackProvider,
+  ContentConfigurationServiceProvidersService,
   IAMGraphQlService,
+  OpenmfpPortalContextService,
+  PMAuthConfigProvider,
+  RequestContextProviderImpl,
 } from '@platform-mesh/portal-server-lib/portal-options';
 import { config } from 'dotenv';
 import * as path from 'node:path';
@@ -20,7 +21,7 @@ const portalOptions: PortalModuleOptions = {
   frontendDistSources: path.join(
     __dirname,
     '../..',
-    'frontend/dist/frontend/browser'
+    'frontend/dist/frontend/browser',
   ),
   requestContextProvider: RequestContextProviderImpl,
   portalContextProvider: OpenmfpPortalContextService,
@@ -32,6 +33,7 @@ const portalOptions: PortalModuleOptions = {
     OpenmfpPortalContextService,
     IAMGraphQlService,
     RequestContextProviderImpl,
+    PMAuthConfigProvider,
   ],
   serviceProviderService: ContentConfigurationServiceProvidersService,
   authCallbackProvider: AuthCallbackProvider,
