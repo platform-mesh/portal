@@ -38,7 +38,7 @@ const portalOptions: PortalModuleOptions = {
     PMAuthConfigProvider,
   ],
   serviceProviderService: ContentConfigurationServiceProvidersService,
-  ...(authCallbackProvider ? { authCallbackProvider } : {}),
+  authCallbackProvider,
 } as PortalModuleOptions;
 
 @Module({
