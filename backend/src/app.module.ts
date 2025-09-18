@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 
 config({ path: './.env' });
 
-const enableIamUserOnboard = process.env.ENABLE_IAM_USER_ONBOARD === 'true';
+const authCallbackProvider = process.env.ENABLE_IAM_USER_ONBOARD ? AuthCallbackProvider :  null;
 
 const portalOptions: PortalModuleOptions = {
   frontendDistSources: path.join(
@@ -38,7 +38,7 @@ const portalOptions: PortalModuleOptions = {
     PMAuthConfigProvider,
   ],
   serviceProviderService: ContentConfigurationServiceProvidersService,
-  ...(enableIamUserOnboard ? { authCallbackProvider: AuthCallbackProvider } : {}),
+  ...(authCallbackProvider ? { authCallbackProvider } : {}),
 } as PortalModuleOptions;
 
 @Module({
