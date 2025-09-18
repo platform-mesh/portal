@@ -39,7 +39,7 @@ const portalOptions: PortalModuleOptions = {
   ],
   serviceProviderService: ContentConfigurationServiceProvidersService,
   authCallbackProvider,
-} as PortalModuleOptions;
+};
 
 @Module({
   imports: [PortalModule.create(portalOptions)],
