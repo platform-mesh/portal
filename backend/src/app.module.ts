@@ -3,8 +3,8 @@ import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
 import {
   AccountEntityContextProvider,
   AuthCallbackProvider,
-  ContentConfigurationServiceProvidersService,
   IAMGraphQlService,
+  KubernetesServiceProvidersService,
   OpenmfpPortalContextService,
   PMAuthConfigProvider,
   RequestContextProviderImpl,
@@ -39,7 +39,7 @@ const portalOptions: PortalModuleOptions = {
     RequestContextProviderImpl,
     PMAuthConfigProvider,
   ],
-  serviceProviderService: ContentConfigurationServiceProvidersService,
+  serviceProviderService: KubernetesServiceProvidersService,
   authConfigProvider: PMAuthConfigProvider,
   authCallbackProvider,
 };
