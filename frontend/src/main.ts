@@ -13,6 +13,7 @@ import {
   LuigiExtendedGlobalContextConfigServiceImpl,
   NodeChangeHookConfigServiceImpl,
   NodeContextProcessingServiceImpl,
+  UserProfileConfigServiceImpl,
 } from '@platform-mesh/portal-ui-lib/portal-options';
 
 const portalOptions: PortalOptions = {
@@ -23,11 +24,9 @@ const portalOptions: PortalOptions = {
   luigiExtendedGlobalContextConfigService:
     LuigiExtendedGlobalContextConfigServiceImpl,
   headerBarConfigService: HeaderBarConfigServiceImpl,
+  userProfileConfigService: UserProfileConfigServiceImpl,
 };
 
 bootstrapApplication(PortalComponent, {
-  providers: [
-    provideRouter(routes),
-    providePortal(portalOptions),
-  ],
+  providers: [provideRouter(routes), providePortal(portalOptions)],
 }).catch((err) => console.error(err));
