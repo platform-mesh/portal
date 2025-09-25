@@ -25,7 +25,6 @@ const portalOptions: PortalOptions = {
     LuigiExtendedGlobalContextConfigServiceImpl,
   headerBarConfigService: HeaderBarConfigServiceImpl,
   userProfileConfigService: UserProfileConfigServiceImpl,
-  enableGettingStartedGlobalNode: true,
 };
 
 bootstrapApplication(PortalComponent, {
