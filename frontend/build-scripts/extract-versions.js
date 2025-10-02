@@ -5,8 +5,11 @@ const path = require('path');
 const config = {
   portal: packageLockJson.version,
   angularCore: packageLockJson.packages['node_modules/@angular/core']?.version,
-  portalUi:
+  openmfpPortalUi:
     packageLockJson.packages['node_modules/@openmfp/portal-ui-lib']?.version,
+  platformMeshPortalUi:
+    packageLockJson.packages['node_modules/@platform-mesh/portal-ui-lib']
+      ?.version,
   luigiCore:
     packageLockJson.packages['node_modules/@luigi-project/core']?.version,
   luigiClient:
@@ -36,7 +39,7 @@ const outputPath = path.resolve(
   '../',
   'src',
   'assets',
-  'dependencies-versions.json'
+  'dependencies-versions.json',
 );
 
 const outputDir = path.dirname(outputPath);
