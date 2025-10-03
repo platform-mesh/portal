@@ -9,6 +9,7 @@ import {
 } from '@openmfp/portal-ui-lib';
 import {
   CustomGlobalNodesServiceImpl,
+  CustomRoutingConfigServiceImpl,
   HeaderBarConfigServiceImpl,
   LuigiExtendedGlobalContextConfigServiceImpl,
   NodeChangeHookConfigServiceImpl,
@@ -25,6 +26,7 @@ const portalOptions: PortalOptions = {
     LuigiExtendedGlobalContextConfigServiceImpl,
   headerBarConfigService: HeaderBarConfigServiceImpl,
   userProfileConfigService: UserProfileConfigServiceImpl,
+  routingConfigService: CustomRoutingConfigServiceImpl,
 };
 
 bootstrapApplication(PortalComponent, {
