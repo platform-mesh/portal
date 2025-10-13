@@ -4,15 +4,17 @@ import {
   AccountEntityContextProvider,
   AuthCallbackProvider,
   IAMGraphQlService,
+  KcpKubernetesService,
   KubernetesServiceProvidersService,
-  OpenmfpPortalContextService,
   PMAuthConfigProvider,
-  RequestContextProviderImpl,
+  PMPortalContextService,
+  PMRequestContextProvider,
 } from '@platform-mesh/portal-server-lib/portal-options';
 import { config } from 'dotenv';
 import * as path from 'node:path';
+import { fileURLToPath } from 'url';
 
-const __filename = new URL(import.meta.url).pathname;
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 config({ path: './.env' });
@@ -24,19 +26,20 @@ const authCallbackProvider = process.env.ENABLE_IAM_USER_ONBOARD
 const portalOptions: PortalModuleOptions = {
   frontendDistSources: path.join(
     __dirname,
-    '../..',
+    '../../..',
     'frontend/dist/frontend/browser',
   ),
-  requestContextProvider: RequestContextProviderImpl,
-  portalContextProvider: OpenmfpPortalContextService,
+  requestContextProvider: PMRequestContextProvider,
+  portalContextProvider: PMPortalContextService,
   entityContextProviders: {
     account: AccountEntityContextProvider,
   },
   additionalProviders: [
+    KcpKubernetesService,
     AccountEntityContextProvider,
-    OpenmfpPortalContextService,
+    PMPortalContextService,
     IAMGraphQlService,
-    RequestContextProviderImpl,
+    PMRequestContextProvider,
     PMAuthConfigProvider,
   ],
   serviceProviderService: KubernetesServiceProvidersService,
