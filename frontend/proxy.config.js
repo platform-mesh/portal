@@ -20,6 +20,7 @@ module.exports = {
           hostname = requestUrl.hostname; // e.g., 'localhost' or 'sub.localhost'
         } catch (e) {
           console.error('Invalid origin:', origin);
+          requestUrl = new URL('http://localhost');
           hostname = 'localhost'; // Fallback
         }
 
