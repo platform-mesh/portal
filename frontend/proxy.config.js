@@ -9,25 +9,20 @@ module.exports = {
       proxy.on('proxyReq', (proxyReq, req, _res) => {
         // Get the Origin or Host header from the incoming request
         const origin = req.headers.origin || `http://${req.headers.host}` || '';
-        console.log('Origin/Header:', origin);
 
-        // Parse the origin to extract the hostname
-        let hostname;
         let requestUrl;
         try {
-          requestUrl = new URL(origin); // e.g., 'localhost' or 'sub.localhost'
-          hostname = requestUrl.hostname; // e.g., 'localhost' or 'sub.localhost'
+          requestUrl = new URL(origin);
         } catch (e) {
           console.error('Invalid origin:', origin);
           requestUrl = new URL('http://localhost');
-          hostname = 'localhost'; // Fallback
         }
 
         // Set the target with the same hostname but port where the backend is running
-        const target = `http://${hostname}:${backendPort}`;
+        const target = `http://${requestUrl.hostname}:${backendPort}`;
 
         // Update the proxy request's Host header and path
-        proxyReq.setHeader('Host', `${hostname}:${backendPort}`);
+        proxyReq.setHeader('Host', `${requestUrl.hostname}:${backendPort}`);
         proxyReq.setHeader('x-forwarded-port', requestUrl.port);
         proxyReq.path = req.url; // Preserve the original path
         options.target = target; // Update the target for this request
