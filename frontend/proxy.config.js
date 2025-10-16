@@ -1,6 +1,9 @@
+const backendPort = process.env.PORT || 3000;
+console.log('Backend port:', backendPort);
+
 module.exports = {
   '/rest': {
-    target: 'http://localhost:3000', // Default target (fallback)
+    target: `http://localhost:${backendPort}`, // Default target (fallback)
     changeOrigin: true,
     secure: false,
     configure: (proxy, options) => {
@@ -11,18 +14,21 @@ module.exports = {
 
         // Parse the origin to extract the hostname
         let hostname;
+        let requestUrl;
         try {
-          hostname = new URL(origin).hostname; // e.g., 'localhost' or 'sub.localhost'
+          requestUrl = new URL(origin); // e.g., 'localhost' or 'sub.localhost'
+          hostname = requestUrl.hostname; // e.g., 'localhost' or 'sub.localhost'
         } catch (e) {
           console.error('Invalid origin:', origin);
           hostname = 'localhost'; // Fallback
         }
 
-        // Set the target with the same hostname but port 3000
-        const target = `http://${hostname}:3000`;
+        // Set the target with the same hostname but port where the backend is running
+        const target = `http://${hostname}:${backendPort}`;
 
         // Update the proxy request's Host header and path
-        proxyReq.setHeader('Host', `${hostname}:3000`);
+        proxyReq.setHeader('Host', `${hostname}:${backendPort}`);
+        proxyReq.setHeader('x-forwarded-port', requestUrl.port);
         proxyReq.path = req.url; // Preserve the original path
         options.target = target; // Update the target for this request
       });
