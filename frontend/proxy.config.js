@@ -1,5 +1,4 @@
 const backendPort = process.env.PORT || 3000;
-console.log('Backend port:', backendPort);
 
 module.exports = {
   '/rest': {
