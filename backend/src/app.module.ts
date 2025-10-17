@@ -7,6 +7,7 @@ import {
   KcpKubernetesService,
   KubernetesServiceProvidersService,
   PMAuthConfigProvider,
+  PMLogoutService,
   PMPortalContextService,
   PMRequestContextProvider,
 } from '@platform-mesh/portal-server-lib/portal-options';
@@ -43,6 +44,7 @@ const portalOptions: PortalModuleOptions = {
   ],
   serviceProviderService: KubernetesServiceProvidersService,
   authConfigProvider: PMAuthConfigProvider,
+  logoutCallbackProvider: PMLogoutService,
   authCallbackProvider,
 };
 
