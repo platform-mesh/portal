@@ -33,14 +33,14 @@
     "@luigi-project/client": "^2.21.2",
     "@luigi-project/core": "^2.21.2",
     "@luigi-project/plugin-auth-oauth2": "^2.21.2",
-    "@openmfp/portal-ui-lib": "^0.181.2",
-    "@platform-mesh/portal-ui-lib": "^0.15.0",
+    "@openmfp/portal-ui-lib": "0.181.5",
+    "@platform-mesh/portal-ui-lib": "0.15.0",
     "@ui5/webcomponents-ngx": "0.5.6",
     "jmespath": "0.16.0",
-    "jwt-decode": "^4.0.0",
+    "jwt-decode": "4.0.0",
     "lodash": "4.17.21",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
+    "tslib": "2.8.1",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -49,11 +49,11 @@
     "@angular/build": "^20.2.1",
     "@angular/cli": "^20.2.1",
     "@angular/compiler-cli": "^20.2.3",
-    "@openmfp/config-prettier": "^0.8.1",
-    "@openmfp/eslint-config-typescript": "^0.7.0",
+    "@openmfp/config-prettier": "0.8.1",
+    "@openmfp/eslint-config-typescript": "0.7.0",
     "@types/jest": "^29.5.1",
     "jest": "^29.7.0",
-    "nodemon": "^3.1.9",
+    "nodemon": "3.1.10",
     "rimraf": "6.0.1",
     "typescript": "~5.9.0"
   }
