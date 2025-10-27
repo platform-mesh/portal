@@ -44,7 +44,7 @@
     "@nestjs/testing": "11.1.7",
     "@openmfp/config-prettier": "0.8.1",
     "@openmfp/eslint-config-typescript": "0.7.0",
-    "@types/express": "5.0.4",
+    "@types/express": "5.0.5",
     "@types/jest": "30.0.0",
     "@types/node": "22.18.12",
     "@types/supertest": "6.0.3",
