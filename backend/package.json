@@ -28,7 +28,7 @@
     "@nestjs/core": "11.1.7",
     "@nestjs/platform-express": "11.1.7",
     "@nestjs/serve-static": "5.0.4",
-    "@openmfp/portal-server-lib": "0.160.7",
+    "@openmfp/portal-server-lib": "0.161.0",
     "@platform-mesh/portal-server-lib": "0.4.27",
     "axios": "1.12.2",
     "class-validator": "0.14.2",
