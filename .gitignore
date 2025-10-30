@@ -8,3 +8,7 @@ node_modules
 yalc.lock
 .yalc
 schemas
+
+# AI Tools
+.claude
+CLAUDE.local.md

@@ -11,12 +11,10 @@ https://api.reuse.software/badge/github.com/platform-mesh/portal)](https://api.r
 
 ### Use the docker build locally
 
-The docker build needs a GitHub token with a scope to access the packages of Platform Mesh.
+All dependencies (`@openmfp` and `@platform-mesh` packages) are now available on npmjs and do not require authentication.
 
-The following command will create a secret file with the token and build the docker image. If the build fails, the secret file will be removed.
-It assumes that the token is stored in the environment variable `$GITHUB_TOKEN`.
 ```bash
-mkdir -p .secret && echo -n $GITHUB_TOKEN > .secret/gh-token && docker build --secret id=NODE_AUTH_TOKEN,src=.secret/gh-token . || rm .secret/gh-token
+docker build .
 ```
 
 ## Requirements
