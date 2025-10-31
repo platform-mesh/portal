@@ -50,7 +50,7 @@
     "@angular/cli": "20.3.7",
     "@angular/compiler-cli": "20.3.9",
     "@openmfp/config-prettier": "0.9.1",
-    "@openmfp/eslint-config-typescript": "0.7.3",
+    "@openmfp/eslint-config-typescript": "0.7.5",
     "@types/jest": "29.5.14",
     "jest": "29.7.0",
     "nodemon": "3.1.10",
