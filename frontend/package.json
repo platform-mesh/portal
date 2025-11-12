@@ -53,7 +53,7 @@
     "@openmfp/eslint-config-typescript": "0.7.5",
     "@types/jest": "29.5.14",
     "jest": "29.7.0",
-    "nodemon": "3.1.10",
+    "nodemon": "3.1.11",
     "rimraf": "6.1.0",
     "typescript": "5.9.3"
   }
