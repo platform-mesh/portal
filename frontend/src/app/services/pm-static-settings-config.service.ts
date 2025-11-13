@@ -15,9 +15,9 @@ export class PMStaticSettingsConfigService
         favicon: logo,
       },
       links: [
-        { title: 'Portal Mesh', link: 'https://platform-mesh.io' },
+        { title: 'Platform Mesh', link: 'https://platform-mesh.io' },
         {
-          title: 'Portal Mesh GitHub',
+          title: 'Platform Mesh GitHub',
           link: 'https://github.com/platform-mesh',
         },
       ],
