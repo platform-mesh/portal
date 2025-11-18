@@ -1,5 +1,6 @@
 import { routes } from './app/app.routes';
 import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import {
@@ -30,5 +31,9 @@ const portalOptions: PortalOptions = {
 };
 
 bootstrapApplication(PortalComponent, {
-  providers: [provideRouter(routes), providePortal(portalOptions)],
+  providers: [
+    provideRouter(routes),
+    providePortal(portalOptions),
+    provideZonelessChangeDetection(),
+  ],
 }).catch((err) => console.error(err));
