@@ -34,7 +34,7 @@
     "class-validator": "0.14.3",
     "cookie-parser": "1.4.7",
     "dotenv": "17.2.3",
-    "graphql-request": "7.3.4",
+    "graphql-request": "7.3.5",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2"
   },
