@@ -20,6 +20,32 @@ You are welcome to contribute with your pull requests. These steps explain the c
 
 Run `npm start` to run the project.
 
+### Testing changes to portal-server-lib locally
+
+If you need to make changes to `@platform-mesh/portal-server-lib` and test them locally:
+
+1. **Open a PR** in the [portal-server-lib](https://github.com/platform-mesh/portal-server-lib) repository with your changes.
+
+2. **Install your branch** into the backend:
+   ```bash
+   cd backend
+   npm install github:platform-mesh/portal-server-lib#your-branch-name
+   ```
+
+3. **Add the postinstall script** to `backend/package.json` (do not commit this change):
+   ```json
+   "scripts": {
+     "postinstall": "(cd node_modules/@platform-mesh/portal-server-lib && [ ! -d dist ] && npm install && npm run build || true) && rm -rf node_modules/@platform-mesh/portal-server-lib/node_modules",
+     ...
+   }
+   ```
+   This script builds the package from source and removes nested dependencies to prevent NestJS dependency injection errors.
+
+4. **Build and load the Docker image** into your local-setup:
+   ```bash
+   podman build --no-cache -t your-image-name .
+   ```
+
 ## Testing
 
 > **NOTE:** You should always add tests, if you are adding code to our repository.
