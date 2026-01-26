@@ -14,18 +14,8 @@ const config = {
     packageLockJson.packages['node_modules/@luigi-project/core']?.version,
   luigiClient:
     packageLockJson.packages['node_modules/@luigi-project/client']?.version,
-  ui5WebComponents:
-    packageLockJson.packages['node_modules/@ui5/webcomponents']?.version,
-  ui5WebComponentsBase:
-    packageLockJson.packages['node_modules/@ui5/webcomponents-base']?.version,
-  ui5WebComponentsIcons:
-    packageLockJson.packages['node_modules/@ui5/webcomponents-icons']?.version,
-  fundamentalsCore:
-    packageLockJson.packages['node_modules/@fundamental-ngx/core']?.version,
-  fundamentalsCdk:
-    packageLockJson.packages['node_modules/@fundamental-ngx/cdk']?.version,
-  fundamentalsI18n:
-    packageLockJson.packages['node_modules/@fundamental-ngx/i18n']?.version,
+  ui5WebComponentsNgx:
+    packageLockJson.packages['node_modules/@ui5/webcomponents-ngx']?.version,
 };
 
 for (const [key] of Object.entries(config)) {
