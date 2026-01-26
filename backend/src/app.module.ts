@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
 import {
   AccountEntityContextProvider,
-  AuthCallbackProvider,
-  IAMGraphQlService,
   KcpKubernetesService,
   KubernetesServiceProvidersService,
   PMAuthConfigProvider,
@@ -18,10 +16,6 @@ const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
 
 config({ path: './.env' });
-
-const authCallbackProvider = process.env.ENABLE_IAM_USER_ONBOARD
-  ? AuthCallbackProvider
-  : null;
 
 const portalOptions: PortalModuleOptions = {
   frontendDistSources: path.join(
@@ -38,14 +32,12 @@ const portalOptions: PortalModuleOptions = {
     KcpKubernetesService,
     AccountEntityContextProvider,
     PMPortalContextService,
-    IAMGraphQlService,
     PMRequestContextProvider,
     PMAuthConfigProvider,
   ],
   serviceProviderService: KubernetesServiceProvidersService,
   authConfigProvider: PMAuthConfigProvider,
   logoutCallbackProvider: PMLogoutService,
-  authCallbackProvider,
 };
 
 @Module({
