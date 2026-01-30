@@ -31,7 +31,7 @@
     "@luigi-project/core": "2.26.0",
     "@luigi-project/plugin-auth-oauth2": "2.26.0",
     "@openmfp/portal-ui-lib": "0.186.12",
-    "@platform-mesh/portal-ui-lib": "^0.29.1",
+    "@platform-mesh/portal-ui-lib": "^0.30.0",
     "@ui5/webcomponents-ngx": "0.5.10",
     "jmespath": "0.16.0",
     "jwt-decode": "4.0.0",
