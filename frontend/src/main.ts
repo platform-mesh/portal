@@ -1,5 +1,3 @@
-import { routes } from './app/app.routes';
-import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
@@ -13,10 +11,13 @@ import {
   CustomRoutingConfigServiceImpl,
   HeaderBarConfigServiceImpl,
   LuigiExtendedGlobalContextConfigServiceImpl,
+  NavigationRedirectStrategyServiceImpl,
   NodeChangeHookConfigServiceImpl,
   NodeContextProcessingServiceImpl,
   UserProfileConfigServiceImpl,
 } from '@platform-mesh/portal-ui-lib/portal-options';
+import { routes } from './app/app.routes';
+import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
 
 const portalOptions: PortalOptions = {
   staticSettingsConfigService: PMStaticSettingsConfigService,
@@ -28,6 +29,7 @@ const portalOptions: PortalOptions = {
   headerBarConfigService: HeaderBarConfigServiceImpl,
   userProfileConfigService: UserProfileConfigServiceImpl,
   routingConfigService: CustomRoutingConfigServiceImpl,
+  navigationRedirectStrategy: NavigationRedirectStrategyServiceImpl
 };
 
 bootstrapApplication(PortalComponent, {
