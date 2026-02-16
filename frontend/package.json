@@ -44,7 +44,7 @@
     "@openmfp/eslint-config-typescript": "0.7.11",
     "jsdom": "28.1.0",
     "nodemon": "3.1.11",
-    "rimraf": "6.1.2",
+    "rimraf": "6.1.3",
     "typescript": "5.9.3",
     "vitest": "4.0.18"
   }
