@@ -7,7 +7,6 @@ import {
   providePortal,
 } from '@openmfp/portal-ui-lib';
 import {
-  CustomGlobalNodesServiceImpl,
   CustomRoutingConfigServiceImpl,
   HeaderBarConfigServiceImpl,
   LuigiExtendedGlobalContextConfigServiceImpl,
@@ -18,11 +17,12 @@ import {
 } from '@platform-mesh/portal-ui-lib/portal-options';
 import { routes } from './app/app.routes';
 import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
+import { PMCustomGlobalNodesService } from './app/services/pm-custom-global-nodes.service';
 
 const portalOptions: PortalOptions = {
   staticSettingsConfigService: PMStaticSettingsConfigService,
   nodeChangeHookConfigService: NodeChangeHookConfigServiceImpl,
-  customGlobalNodesService: CustomGlobalNodesServiceImpl,
+  customGlobalNodesService: PMCustomGlobalNodesService,
   nodeContextProcessingService: NodeContextProcessingServiceImpl,
   luigiExtendedGlobalContextConfigService:
     LuigiExtendedGlobalContextConfigServiceImpl,
