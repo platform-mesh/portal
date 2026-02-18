@@ -6,10 +6,10 @@ import {
   inject,
   signal,
   effect,
+  ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Terminal } from '@xterm/xterm';
-import '@xterm/xterm/css/xterm.css';
 import { FitAddon } from '@xterm/addon-fit';
 import { WebLinksAddon } from '@xterm/addon-web-links';
 import { Subscription, firstValueFrom } from 'rxjs';
@@ -27,6 +27,7 @@ import {
   selector: 'pm-terminal-panel',
   standalone: true,
   imports: [CommonModule],
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div
       class="terminal-panel"
@@ -246,13 +247,25 @@ import {
 
       .terminal-panel-content {
         flex: 1;
+        min-height: 0;
         overflow: hidden;
         position: relative;
       }
 
       .terminal-container {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+      }
+
+      .terminal-container .xterm {
         height: 100%;
-        padding: 8px;
+      }
+
+      .terminal-container .xterm-viewport {
+        overflow-y: scroll !important;
       }
 
       .loading-overlay,
@@ -431,6 +444,7 @@ export class TerminalPanelComponent implements OnDestroy {
       cursorBlink: true,
       fontSize: 14,
       fontFamily: 'Menlo, Monaco, "Courier New", monospace',
+      scrollback: 10000,
       theme: {
         background: '#1e1e1e',
         foreground: '#e0e0e0',
@@ -452,11 +466,18 @@ export class TerminalPanelComponent implements OnDestroy {
       this.webSocketService.send(data);
     });
 
+    // Debounce resize to avoid excessive updates
+    let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
     this.resizeObserver = new ResizeObserver(() => {
-      this.fitTerminal();
-      if (this.xterm) {
-        this.webSocketService.sendResize(this.xterm.cols, this.xterm.rows);
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
       }
+      resizeTimeout = setTimeout(() => {
+        this.fitTerminal();
+        if (this.xterm) {
+          this.webSocketService.sendResize(this.xterm.cols, this.xterm.rows);
+        }
+      }, 100);
     });
     this.resizeObserver.observe(this.terminalContainer.nativeElement);
   }
@@ -480,6 +501,14 @@ export class TerminalPanelComponent implements OnDestroy {
 
     if (this.xterm) {
       this.webSocketService.connect(sessionId, this.xterm);
+
+      // Send resize after connection to ensure server has correct dimensions
+      setTimeout(() => {
+        if (this.xterm && this.fitAddon) {
+          this.fitAddon.fit();
+          this.webSocketService.sendResize(this.xterm.cols, this.xterm.rows);
+        }
+      }, 1000);
     }
 
     this.loading.set(false);

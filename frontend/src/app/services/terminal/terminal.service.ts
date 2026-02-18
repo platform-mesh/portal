@@ -66,7 +66,7 @@ const GET_TERMINAL_QUERY = gql`
   query GetTerminal($name: String!) {
     terminal_platform_mesh_io {
       v1alpha1 {
-        terminal(name: $name) {
+        Terminal(name: $name) {
           metadata {
             name
             resourceVersion
@@ -86,7 +86,7 @@ const GET_TERMINAL_QUERY = gql`
 interface GetTerminalResponse {
   terminal_platform_mesh_io: {
     v1alpha1: {
-      terminal: Terminal | null;
+      Terminal: Terminal | null;
     };
   };
 }
@@ -176,7 +176,7 @@ export class TerminalService {
         })
       );
 
-      return result.data?.terminal_platform_mesh_io.v1alpha1.terminal || null;
+      return result.data?.terminal_platform_mesh_io.v1alpha1.Terminal || null;
     } catch {
       return null;
     }
@@ -185,36 +185,47 @@ export class TerminalService {
   private async createTerminal(name: string, userSub: string): Promise<Terminal> {
     const nodeContext = this.buildNodeContext();
 
-    const result = await firstValueFrom(
-      this.apolloFactory.apollo(nodeContext).mutate<CreateTerminalResponse>({
-        mutation: CREATE_TERMINAL_MUTATION,
-        variables: {
-          object: {
-            metadata: {
-              name,
-              annotations: {
-                'kcp.io/user-info': userSub,
+    try {
+      const result = await firstValueFrom(
+        this.apolloFactory.apollo(nodeContext).mutate<CreateTerminalResponse>({
+          mutation: CREATE_TERMINAL_MUTATION,
+          variables: {
+            object: {
+              metadata: {
+                name,
+                annotations: {
+                  'kcp.io/user-info': userSub,
+                },
               },
             },
           },
+        })
+      );
+
+      const metadata =
+        result.data?.terminal_platform_mesh_io.v1alpha1.createTerminal.metadata;
+
+      if (!metadata) {
+        throw new Error('Failed to create terminal: no metadata returned');
+      }
+
+      return {
+        metadata: {
+          name: metadata.name,
+          resourceVersion: metadata.resourceVersion,
         },
-      })
-    );
-
-    const metadata =
-      result.data?.terminal_platform_mesh_io.v1alpha1.createTerminal.metadata;
-
-    if (!metadata) {
-      throw new Error('Failed to create terminal: no metadata returned');
+        spec: {},
+      };
+    } catch (err) {
+      // Handle "already exists" error - fetch and return the existing terminal
+      if (err instanceof Error && err.message.includes('already exists')) {
+        const existing = await this.getTerminal(name);
+        if (existing) {
+          return existing;
+        }
+      }
+      throw err;
     }
-
-    return {
-      metadata: {
-        name: metadata.name,
-        resourceVersion: metadata.resourceVersion,
-      },
-      spec: {},
-    };
   }
 
   watchTerminal(name: string): Observable<TerminalSubscriptionEvent> {
