@@ -1,11 +1,6 @@
-import {
-  LuigiStaticSettings,
-  StaticSettingsConfigService,
-} from '@openmfp/portal-ui-lib';
+import { LuigiStaticSettings, StaticSettingsConfigService } from '@openmfp/portal-ui-lib';
 
-export class PMStaticSettingsConfigService
-  implements StaticSettingsConfigService
-{
+export class PMStaticSettingsConfigService implements StaticSettingsConfigService {
   getStaticSettingsConfig() {
     const logo = 'assets/logo.svg';
     const settings: LuigiStaticSettings = {
@@ -21,6 +16,11 @@ export class PMStaticSettingsConfigService
           link: 'https://github.com/platform-mesh',
         },
       ],
+      experimental: {
+        btpToolLayout: true,
+        globalNav: true,
+        navHeader: true,
+      },
     };
 
     return settings as any;
