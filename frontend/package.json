@@ -31,7 +31,7 @@
     "@luigi-project/core": "2.27.0",
     "@luigi-project/plugin-auth-oauth2": "2.27.0",
     "@openmfp/portal-ui-lib": "0.192.1",
-    "@platform-mesh/portal-ui-lib": "0.38.2",
+    "@platform-mesh/portal-ui-lib": "0.38.3",
     "rxjs": "7.8.2",
     "tslib": "2.8.1"
   },
