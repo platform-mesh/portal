@@ -39,3 +39,4 @@ module.exports = {
   '/callback': proxy,
   '/rest': proxy,
 };
+

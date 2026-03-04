@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   pipe:
-    uses: platform-mesh/.github/.github/workflows/pipeline-node-app.yml@main
+    uses: platform-mesh/.github/.github/workflows/pipeline-node-app.yml@feat/sbom
     secrets: inherit
     with:
       imageTagName: ghcr.io/platform-mesh/portal
