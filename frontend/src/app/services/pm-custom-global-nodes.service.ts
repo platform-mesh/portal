@@ -25,7 +25,7 @@ export class PMCustomGlobalNodesService {
         icon: 'command-line-interfaces',
         hideFromNav: false,
         globalNav: true,
-        order: '900',
+        order: 900,
         context: {} as any,
         onNodeActivation: () => {
           this.toggleTerminal();
