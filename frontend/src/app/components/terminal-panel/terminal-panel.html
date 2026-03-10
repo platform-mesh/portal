@@ -1,0 +1,113 @@
+<div
+  class="terminal-panel"
+  [class.open]="panelState() !== 'hidden'"
+  [class.collapsed]="panelState() === 'collapsed'"
+  [class.maximized]="panelState() === 'maximized'"
+>
+  <div class="terminal-panel-header">
+    <div class="header-left">
+      @if (panelState() === 'collapsed') {
+        <button
+          class="icon-button"
+          (click)="expand()"
+          title="Expand terminal"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+          >
+            <path d="M8 4l4 4H4l4-4z" />
+          </svg>
+        </button>
+      } @else {
+        <button
+          class="icon-button"
+          (click)="collapse()"
+          title="Collapse terminal"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+          >
+            <path d="M8 12l-4-4h8l-4 4z" />
+          </svg>
+        </button>
+      }
+      <span class="title">Terminal</span>
+      @if (connectionStatus()) {
+        <span class="status-badge" [class]="connectionStatus()">
+          {{ connectionStatus() }}
+        </span>
+      }
+    </div>
+    <div class="header-right">
+      @if (panelState() !== 'collapsed') {
+        <button
+          class="icon-button"
+          (click)="cycleSize()"
+          title="Toggle size"
+        >
+          @if (panelState() === 'maximized') {
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+            >
+              <path
+                d="M3 5v6h10V5H3zm9 5H4V6h8v4zM2 4h12v8H2V4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          } @else {
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+            >
+              <path d="M3 3v10h10V3H3zm9 9H4V4h8v8z" />
+            </svg>
+          }
+        </button>
+      }
+      <button
+        class="icon-button close-button"
+        (click)="close()"
+        title="Close terminal"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="currentColor"
+        >
+          <path
+            d="M8 7.293l3.146-3.147.708.708L8.707 8l3.147 3.146-.708.708L8 8.707l-3.146 3.147-.708-.708L7.293 8 4.146 4.854l.708-.708L8 7.293z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+  @if (panelState() !== 'collapsed') {
+    <div class="terminal-panel-content">
+      @if (loading()) {
+        <div class="loading-overlay">
+          <div class="loading-spinner"></div>
+          <span>Starting terminal...</span>
+        </div>
+      }
+      @if (error()) {
+        <div class="error-overlay">
+          <span>{{ error() }}</span>
+          <button class="retry-button" (click)="retry()">Retry</button>
+        </div>
+      }
+      <div #terminalContainer class="terminal-container"></div>
+    </div>
+  }
+</div>
