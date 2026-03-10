@@ -25,6 +25,7 @@ export class PMCustomGlobalNodesService {
         icon: 'command-line-interfaces',
         hideFromNav: false,
         globalNav: true,
+        visibleForFeatureToggles: ['terminal'],
         order: 900,
         context: {} as any,
         onNodeActivation: () => {
