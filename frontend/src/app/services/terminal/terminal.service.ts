@@ -19,11 +19,10 @@ import { gql } from 'apollo-angular';
 import { Terminal, TerminalSubscriptionEvent } from './terminal.types';
 
 const TERMINAL_RESOURCE_DEFINITION = {
-  group: 'terminal.platform-mesh.io',
+  group: 'terminal_platform_mesh_io',
   version: 'v1alpha1',
-  kind: 'Terminal',
-  plural: 'terminals',
-  singular: 'terminal',
+  entity: 'Terminal',
+  entityCollection: 'Terminals',
   scope: 'Cluster' as const,
 };
 
