@@ -1,25 +1,28 @@
+import { Terminal, TerminalSubscriptionEvent } from './terminal.types';
 import { Injectable, inject } from '@angular/core';
 import { LuigiCoreService } from '@openmfp/portal-ui-lib';
 import {
-  ResourceService,
-  ResourceNodeContext,
+  Resource,
+  ResourceDefinition,
+} from '@platform-mesh/portal-ui-lib/models';
+import {
   ApolloFactory,
+  ResourceNodeContext,
+  ResourceService,
 } from '@platform-mesh/portal-ui-lib/services';
-import { Resource } from '@platform-mesh/portal-ui-lib/models';
+import { gql } from 'apollo-angular';
 import {
   Observable,
+  catchError,
   filter,
-  take,
-  timeout,
   firstValueFrom,
   map,
-  catchError,
+  take,
+  timeout,
 } from 'rxjs';
-import { gql } from 'apollo-angular';
-import { Terminal, TerminalSubscriptionEvent } from './terminal.types';
 
-const TERMINAL_RESOURCE_DEFINITION = {
-  group: 'terminal_platform_mesh_io',
+const TERMINAL_RESOURCE_DEFINITION: ResourceDefinition = {
+  apiGroup: 'terminal_platform_mesh_io',
   version: 'v1alpha1',
   entity: 'Terminal',
   entityCollection: 'Terminals',
