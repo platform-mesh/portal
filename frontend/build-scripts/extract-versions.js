@@ -14,8 +14,9 @@ const config = {
     packageLockJson.packages['node_modules/@luigi-project/core']?.version,
   luigiClient:
     packageLockJson.packages['node_modules/@luigi-project/client']?.version,
-  ui5WebComponentsNgx:
-    packageLockJson.packages['node_modules/@ui5/webcomponents-ngx']?.version,
+  ui5WebComponentsViaFundamentalsNgx:
+    packageLockJson.packages['node_modules/@fundamental-ngx/ui5-webcomponents']
+      ?.version,
 };
 
 for (const [key] of Object.entries(config)) {
