@@ -25,6 +25,18 @@ jobs:
   # ──────────────────────────────────────────────
   # Always-run jobs (PR + main)
   # ──────────────────────────────────────────────
+  audit-frontend:
+    uses: platform-mesh/.github/.github/workflows/job-node-audit.yml@main
+    with:
+      workingDirectory: './frontend'
+    secrets: inherit
+
+  audit-backend:
+    uses: platform-mesh/.github/.github/workflows/job-node-audit.yml@main
+    with:
+      workingDirectory: './backend'
+    secrets: inherit
+
   test:
     uses: platform-mesh/.github/.github/workflows/job-node-test.yml@main
     secrets: inherit
@@ -42,12 +54,20 @@ jobs:
   quality-gate:
     if: always()
     permissions: {}
-    needs: [test, docker-build]
+    needs: [audit-frontend, audit-backend, test, docker-build]
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
       - name: Check results
         run: |
+          if [[ "${{ needs.audit-frontend.result }}" != "success" ]]; then
+            echo "audit-frontend failed"
+            exit 1
+          fi
+          if [[ "${{ needs.audit-backend.result }}" != "success" ]]; then
+            echo "audit-backend failed"
+            exit 1
+          fi
           if [[ "${{ needs.test.result }}" != "success" ]]; then
             echo "test failed"
             exit 1
