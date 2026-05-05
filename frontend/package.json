@@ -31,7 +31,7 @@
     "@luigi-project/core": "2.29.0",
     "@luigi-project/plugin-auth-oauth2": "2.29.0",
     "@openmfp/portal-ui-lib": "0.192.23",
-    "@platform-mesh/portal-ui-lib": "0.44.36",
+    "@platform-mesh/portal-ui-lib": "0.44.37",
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/addon-web-links": "^0.12.0",
     "@xterm/xterm": "^6.0.0",
