@@ -4,7 +4,7 @@
 # Platform Mesh Portal
 
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/platform-mesh/portal/badge)](https://scorecard.dev/viewer/?uri=github.com/platform-mesh/portal)
-![Build Status](https://github.com/platform-mesh/portal/actions/workflows/pipeline.yaml/badge.svg)
+![Build Status](https://github.com/platform-mesh/portal/actions/workflows/ci.yml/badge.svg)
 [![REUSE status](
 https://api.reuse.software/badge/github.com/platform-mesh/portal)](https://api.reuse.software/info/github.com/platform-mesh/portal)
 
