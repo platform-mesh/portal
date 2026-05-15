@@ -4,7 +4,7 @@
   "description": "",
   "engines": {
     "node": "25.9.0",
-    "npm": "11.14.0"
+    "npm": "11.14.1"
   },
   "author": "",
   "license": "ISC",
