@@ -9,12 +9,12 @@ import {
 import {
   CustomRoutingConfigServiceImpl,
   HeaderBarConfigServiceImpl,
-  LuigiExtendedGlobalContextConfigServiceImpl,
   NavigationRedirectStrategyServiceImpl,
   NodeChangeHookConfigServiceImpl,
   NodeContextProcessingServiceImpl,
   UserProfileConfigServiceImpl,
 } from '@platform-mesh/portal-ui-lib/portal-options';
+import { PMLuigiExtendedGlobalContextService } from './app/services/pm-luigi-extended-global-context.service';
 import { routes } from './app/app.routes';
 import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
 import { PMCustomGlobalNodesService } from './app/services/pm-custom-global-nodes.service';
@@ -25,7 +25,7 @@ const portalOptions: PortalOptions = {
   customGlobalNodesService: PMCustomGlobalNodesService,
   nodeContextProcessingService: NodeContextProcessingServiceImpl,
   luigiExtendedGlobalContextConfigService:
-    LuigiExtendedGlobalContextConfigServiceImpl,
+    PMLuigiExtendedGlobalContextService,
   headerBarConfigService: HeaderBarConfigServiceImpl,
   userProfileConfigService: UserProfileConfigServiceImpl,
   routingConfigService: CustomRoutingConfigServiceImpl,

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
+import { IasTokenController } from './ias-token.controller.js';
 import {
   AccountEntityContextProvider,
   KcpKubernetesService,
@@ -42,5 +43,6 @@ const portalOptions: PortalModuleOptions = {
 
 @Module({
   imports: [PortalModule.create(portalOptions)],
+  controllers: [IasTokenController],
 })
 export class AppModule {}
