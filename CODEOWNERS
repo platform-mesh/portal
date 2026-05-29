@@ -1,4 +1,4 @@
 # Default code owners
-* @platform-mesh/tsc @platform-mesh/ui-approvers
+* @platform-mesh/tsc @platform-mesh/ui-approvers @platform-mesh/kube
 package.json
 package-lock.json
