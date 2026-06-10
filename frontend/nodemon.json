@@ -1,0 +1,6 @@
+{
+  "watch": [".yalc"],
+  "ext": "*",
+  "delay": 1000,
+  "exec": "rimraf .angular && ng serve --watch --port 4300"
+}

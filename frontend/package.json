@@ -10,7 +10,7 @@
     "prestart": "npm run extract-versions",
     "prestart:watch": "npm run extract-versions",
     "start": "ng serve --port 4300",
-    "start:watch": "nodemon --watch .yalc -e * --exec \"rimraf .angular && ng serve --watch --port 4300\"",
+    "start:watch": "nodemon",
     "build": "ng build",
     "build:watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -30,8 +30,8 @@
     "@luigi-project/client": "2.29.0",
     "@luigi-project/core": "2.29.0",
     "@luigi-project/plugin-auth-oauth2": "2.29.0",
-    "@openmfp/portal-ui-lib": "0.192.46",
-    "@platform-mesh/portal-ui-lib": "0.45.31",
+    "@openmfp/portal-ui-lib": "0.192.48",
+    "@platform-mesh/portal-ui-lib": "0.45.36",
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/addon-web-links": "^0.12.0",
     "@xterm/xterm": "^6.0.0",
@@ -50,8 +50,5 @@
     "rimraf": "6.1.3",
     "typescript": "5.9.3",
     "vitest": "4.1.8"
-  },
-  "overrides": {
-    "underscore": ">=1.13.8"
   }
 }

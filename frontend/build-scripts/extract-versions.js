@@ -7,6 +7,7 @@ const config = {
   angularCore: packageLockJson.packages['node_modules/@angular/core']?.version,
   openmfpPortalUi:
     packageLockJson.packages['node_modules/@openmfp/portal-ui-lib']?.version,
+  openmfpNgx: packageLockJson.packages['node_modules/@openmfp/ngx']?.version,
   platformMeshPortalUi:
     packageLockJson.packages['node_modules/@platform-mesh/portal-ui-lib']
       ?.version,
