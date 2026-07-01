@@ -30,7 +30,7 @@ const TERMINAL_RESOURCE_DEFINITION: ResourceDefinition = {
 };
 
 const CREATE_TERMINAL_MUTATION = gql`
-  mutation CreateTerminal($object: TerminalInput!) {
+  mutation CreateTerminal($object: TerminalPlatformMeshIoV1alpha1Terminal_Input!) {
     terminal_platform_mesh_io {
       v1alpha1 {
         createTerminal(object: $object) {
