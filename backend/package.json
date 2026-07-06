@@ -29,7 +29,7 @@
     "@nestjs/platform-express": "11.1.19",
     "@nestjs/serve-static": "5.0.5",
     "@openmfp/portal-server-lib": "0.163.25",
-    "@platform-mesh/portal-server-lib": "0.9.26",
+    "@platform-mesh/portal-server-lib": "0.9.63",
     "axios": "1.16.0",
     "class-validator": "0.15.1",
     "cookie-parser": "1.4.7",
@@ -67,6 +67,10 @@
   },
   "type": "module",
   "overrides": {
-    "handlebars": ">=4.7.9"
+    "handlebars": ">=4.7.9",
+    "form-data": "4.0.6",
+    "hono": "4.12.27",
+    "multer": "2.2.0",
+    "undici": "6.27.0"
   }
 }
