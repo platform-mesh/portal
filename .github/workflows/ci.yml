@@ -16,7 +16,7 @@ concurrency:
 jobs:
   test:
     uses: platform-mesh/.github/.github/workflows/job-node-test.yml@9ddacafbe3260312cb1cc3f9974ad2fece8effe0
-    secrets: inherit
+    secrets: inherit # zizmor: ignore[secrets-inherit]
 
   docker-build:
     uses: platform-mesh/.github/.github/workflows/job-docker-build.yml@9ddacafbe3260312cb1cc3f9974ad2fece8effe0
@@ -31,12 +31,15 @@ jobs:
     timeout-minutes: 1
     steps:
       - name: Check results
+        env:
+          TEST_RESULT: ${{ needs.test.result }}
+          DOCKER_BUILD_RESULT: ${{ needs.docker-build.result }}
         run: |
-          if [[ "${{ needs.test.result }}" != "success" ]]; then
+          if [[ "${TEST_RESULT}" != "success" ]]; then
             echo "test failed"
             exit 1
           fi
-          if [[ "${{ needs.docker-build.result }}" != "success" ]]; then
+          if [[ "${DOCKER_BUILD_RESULT}" != "success" ]]; then
             echo "docker-build failed"
             exit 1
           fi
