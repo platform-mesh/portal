@@ -38,7 +38,7 @@
   "devDependencies": {
     "concurrently": "10.0.3",
     "husky": "9.1.7",
-    "lint-staged": "17.1.0"
+    "lint-staged": "17.1.1"
   },
   "husky": {
     "hooks": {
@@ -49,5 +49,8 @@
   "lint-staged": {
     "frontend/**/*.ts": "npm run lint:ui",
     "backend/**/*.ts": "npm run lint:server"
+  },
+  "overrides": {
+    "shell-quote": ">=1.9.0"
   }
 }
