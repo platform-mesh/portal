@@ -1,8 +1,3 @@
-import { routes } from './app/app.routes';
-import { OpenPersistentPanelListener } from './app/services/persistent-panel/open-persistent-panel.listener';
-import { PMCustomGlobalNodesService } from './app/services/pm-custom-global-nodes.service';
-import { PMNodeChangeHookConfigService } from './app/services/pm-node-change-hook-config.service';
-import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
@@ -16,13 +11,18 @@ import {
   HeaderBarConfigServiceImpl,
   LuigiExtendedGlobalContextConfigServiceImpl,
   NavigationRedirectStrategyServiceImpl,
+  NodeChangeHookConfigServiceImpl,
   NodeContextProcessingServiceImpl,
+  OpenPersistentPanelListener,
   UserProfileConfigServiceImpl,
 } from '@platform-mesh/portal-ui-lib/portal-options';
+import { routes } from './app/app.routes';
+import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
+import { PMCustomGlobalNodesService } from './app/services/pm-custom-global-nodes.service';
 
 const portalOptions: PortalOptions = {
   staticSettingsConfigService: PMStaticSettingsConfigService,
-  nodeChangeHookConfigService: PMNodeChangeHookConfigService,
+  nodeChangeHookConfigService: NodeChangeHookConfigServiceImpl,
   customMessageListeners: [OpenPersistentPanelListener],
   customGlobalNodesService: PMCustomGlobalNodesService,
   nodeContextProcessingService: NodeContextProcessingServiceImpl,
@@ -31,7 +31,7 @@ const portalOptions: PortalOptions = {
   headerBarConfigService: HeaderBarConfigServiceImpl,
   userProfileConfigService: UserProfileConfigServiceImpl,
   routingConfigService: CustomRoutingConfigServiceImpl,
-  navigationRedirectStrategy: NavigationRedirectStrategyServiceImpl,
+  navigationRedirectStrategy: NavigationRedirectStrategyServiceImpl
 };
 
 bootstrapApplication(PortalComponent, {
@@ -40,6 +40,4 @@ bootstrapApplication(PortalComponent, {
     providePortal(portalOptions),
     provideZonelessChangeDetection(),
   ],
-}).catch((err) => {
-  console.error(err);
-});
+}).catch((err) => console.error(err));
