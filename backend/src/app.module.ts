@@ -2,8 +2,11 @@ import { Module } from '@nestjs/common';
 import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
 import {
   AccountEntityContextProvider,
+  AuthzWebhookService,
   KcpKubernetesService,
   KubernetesServiceProvidersService,
+  PermissionsController,
+  PermissionsProxyService,
   PMAuthConfigProvider,
   PMLogoutService,
   PMPortalContextService,
@@ -34,7 +37,10 @@ const portalOptions: PortalModuleOptions = {
     PMPortalContextService,
     PMRequestContextProvider,
     PMAuthConfigProvider,
+    PermissionsProxyService,
+    AuthzWebhookService,
   ],
+  additionalControllers: [PermissionsController],
   serviceProviderService: KubernetesServiceProvidersService,
   authConfigProvider: PMAuthConfigProvider,
   logoutCallbackProvider: PMLogoutService,
