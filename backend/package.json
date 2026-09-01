@@ -22,14 +22,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json --passWithNoTests"
   },
   "dependencies": {
-    "@kubernetes/client-node": "1.4.0",
+    "@kubernetes/client-node": "2.0.0",
     "@nestjs/axios": "4.0.1",
     "@nestjs/common": "11.1.19",
     "@nestjs/core": "11.1.19",
     "@nestjs/platform-express": "11.1.19",
     "@nestjs/serve-static": "5.0.5",
-    "@openmfp/portal-server-lib": "0.164.1",
-    "@platform-mesh/portal-server-lib": "0.9.97",
+    "@openmfp/portal-server-lib": "0.164.17",
+    "@platform-mesh/portal-server-lib": "0.10.3",
     "axios": "1.18.0",
     "class-validator": "0.15.1",
     "cookie-parser": "1.4.7",
