@@ -39,8 +39,8 @@
     "tslib": "2.8.1"
   },
   "devDependencies": {
-    "@angular/build": "22.1.4",
-    "@angular/cli": "22.1.4",
+    "@angular/build": "22.1.6",
+    "@angular/cli": "22.1.6",
     "@angular/compiler-cli": "22.1.4",
     "@openmfp/config-prettier": "0.9.2",
     "@openmfp/eslint-config-typescript": "0.7.14",
