@@ -1,4 +1,22 @@
+import '@ui5/webcomponents-fiori/dist/DynamicPage.js';
+import '@ui5/webcomponents-fiori/dist/DynamicPageHeader.js';
+import '@ui5/webcomponents-fiori/dist/DynamicPageTitle.js';
+import '@ui5/webcomponents/dist/Toolbar.js';
+import '@ui5/webcomponents/dist/ToolbarButton.js';
+import '@ui5/webcomponents/dist/ToolbarSpacer.js';
+import '@ui5/webcomponents/dist/Table.js';
+import '@ui5/webcomponents/dist/TableHeaderRow.js';
+import '@ui5/webcomponents/dist/TableHeaderCell.js';
+import '@ui5/webcomponents/dist/TableRow.js';
+import '@ui5/webcomponents/dist/TableCell.js';
+import '@ui5/webcomponents/dist/BusyIndicator.js';
+import '@ui5/webcomponents/dist/MessageStrip.js';
+import '@ui5/webcomponents/dist/Tag.js';
+import '@ui5/webcomponents/dist/Title.js';
+import '@ui5/webcomponents/dist/CheckBox.js';
+import '@ui5/webcomponents/dist/Button.js';
 import {
+  CUSTOM_ELEMENTS_SCHEMA,
   ChangeDetectionStrategy,
   Component,
   OnInit,
@@ -27,6 +45,7 @@ interface ApiExportRow {
   selector: 'pm-platform-admin-panel',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './platform-admin-panel.html',
   styleUrls: ['./platform-admin-panel.scss'],
 })
@@ -102,6 +121,11 @@ export class PlatformAdminComponent implements OnInit {
       next.delete(org);
     }
     this.draftOrgs.set(next);
+  }
+
+  onOrgChange(org: string, event: Event): void {
+    const el = event.target as HTMLElement & { checked: boolean };
+    this.toggleOrg(org, el.checked);
   }
 
   async save(row: ApiExportRow): Promise<void> {

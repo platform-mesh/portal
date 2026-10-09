@@ -1,109 +1,79 @@
-.platform-admin {
-  display: flex;
-  flex-direction: column;
-  background: var(--sapBackgroundColor);
+:host {
+  display: block;
   height: 100%;
 }
 
-.platform-admin__toolbar {
-  padding-inline: var(--fdToolbarInlinePadding, 1rem);
+ui5-dynamic-page {
+  height: 100%;
+
+  // Remove the DynamicPage's default content-area padding so the table
+  // spans edge-to-edge, matching the Accounts page layout.
+  &::part(fit-content) {
+    padding: 0;
+  }
 }
 
-.platform-admin__header-text {
+.pm-admin-heading {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.platform-admin__subtitle {
+.pm-admin-subtitle {
   margin: 0;
   font-size: var(--sapFontSmallSize);
   color: var(--sapContent_LabelColor);
 }
 
-.platform-admin__state {
+.pm-admin-header-description {
+  margin: 0;
+  font-size: var(--sapFontSize);
+  color: var(--sapContent_LabelColor);
+}
+
+.pm-admin-message-strip {
+  margin: 1rem 1rem 0;
+  display: block;
+}
+
+.pm-admin-state {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 2rem;
   justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
   color: var(--sapContent_LabelColor);
-  font-size: var(--sapFontSize);
 }
 
-.platform-admin__state--error {
-  color: var(--sapNegativeTextColor);
-}
-
-.platform-admin__table {
+.pm-admin-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: var(--sapFontSize);
-  font-family: var(--sapFontFamily);
-  color: var(--sapTextColor);
 }
 
-.platform-admin__table th,
-.platform-admin__table td {
-  text-align: left;
-  padding: 0.625rem 0.75rem;
-  border-bottom: 1px solid var(--sapList_BorderColor);
-  vertical-align: top;
-}
-
-.platform-admin__table th {
-  font-weight: var(--sapFontHeaderWeight);
-  color: var(--sapContent_LabelColor);
-  background: var(--sapList_HeaderBackground);
-}
-
-.platform-admin__cell--name {
-  font-weight: var(--sapFontHeaderWeight);
-}
-
-.platform-admin__cell--provider {
+.pm-admin-cell--provider {
   font-family: var(--sapFontMonospaceFamily, 'Courier New', monospace);
   color: var(--sapContent_LabelColor);
 }
 
-.platform-admin__org-editor {
+.pm-admin-org-editor {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
-}
-
-.platform-admin__org-option {
-  display: flex;
-  align-items: center;
   gap: 0.5rem;
-  cursor: pointer;
 }
 
-.platform-admin__org-actions {
+.pm-admin-org-actions {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
 
-.platform-admin__org-display {
+.pm-admin-org-display {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.375rem;
 }
 
-.platform-admin__empty-orgs {
+.pm-admin-empty {
   color: var(--sapContent_NonInteractiveIconColor);
-}
-
-.platform-admin__chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 0.5rem;
-  height: 1.5rem;
-  border-radius: 0.75rem;
-  font-size: var(--sapFontSmallSize);
-  background: var(--sapInformativeBackground);
-  color: var(--sapInformativeTextColor);
-  border: 1px solid var(--sapInformativeBorderColor);
 }
