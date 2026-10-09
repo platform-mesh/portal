@@ -12,10 +12,18 @@ import type { Request } from 'express';
 const ORGS_ACCOUNT_GROUP = 'core.platform-mesh.io';
 const ORGS_ACCOUNT_RESOURCE = 'accounts';
 
-// In the FGA core module `delete` on an account maps to the `owner` relation.
-// Probing `delete accounts` at the root:orgs cluster path therefore tests
-// whether the caller owns the root:orgs account — our definition of a Platform
-// Administrator.
+// INTERIM: Platform Administrator is currently identified as the owner of the
+// root:orgs account. In the FGA core module `delete` on an account maps to the
+// `owner` relation, so probing `delete accounts` at the root:orgs cluster path
+// checks ownership.
+//
+// This is a pragmatic shortcut until a dedicated `platform_admin` FGA relation
+// is introduced in security-operator/data/coreModule.fga and exposed via
+// iam-service/input/roles.yaml. When that work is done, replace this probe with
+// a check for the new relation and update the guard accordingly.
+//
+// TODO: replace owner-reuse with proper platform_admin role check once
+// https://github.com/platform-mesh/backlog/issues/TBD is resolved.
 const OWNER_PROBE_VERB = 'delete';
 
 @Injectable()

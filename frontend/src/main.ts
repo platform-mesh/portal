@@ -19,6 +19,7 @@ import {
 } from '@platform-mesh/portal-ui-lib/portal-options';
 import { routes } from './app/app.routes';
 import { PlatformAdminComponent } from './app/components/platform-admin/platform-admin-panel';
+import { PlatformAdminTileComponent } from './app/components/platform-admin/platform-admin-tile';
 import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
 import { PMCustomGlobalNodesService } from './app/services/pm-custom-global-nodes.service';
 
@@ -51,6 +52,14 @@ bootstrapApplication(PortalComponent, {
       customElements.define(
         'pm-platform-admin',
         createCustomElement(PlatformAdminComponent, {
+          injector: appRef.injector,
+        }),
+      );
+    }
+    if (!customElements.get('pm-platform-admin-tile')) {
+      customElements.define(
+        'pm-platform-admin-tile',
+        createCustomElement(PlatformAdminTileComponent, {
           injector: appRef.injector,
         }),
       );

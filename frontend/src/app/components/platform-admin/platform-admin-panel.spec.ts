@@ -83,12 +83,12 @@ describe('PlatformAdminComponent', () => {
       policies: [policyA],
     });
 
-    const rows = fixture.nativeElement.querySelectorAll('tbody tr');
+    const rows = fixture.nativeElement.querySelectorAll('ui5-table-row');
     expect(rows).toHaveLength(2);
 
     const text = fixture.nativeElement.textContent ?? '';
-    expect(text).toContain('Enabled');
-    expect(text).toContain('Not enabled');
+    expect(text).toContain('Binding enabled');
+    expect(text).toContain('Binding not enabled');
 
     const first = component.rows()[0];
     expect(first.enabled).toBe(true);

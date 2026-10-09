@@ -37,6 +37,18 @@ spec:
                     "kind": "Account"
                   }
                 }
+              },
+              {
+                "entityType": "main.overview::compound",
+                "url": "/assets/pm-platform-admin-wc.js",
+                "webcomponent": {
+                  "selfRegistered": true,
+                  "type": "module",
+                  "tagName": "pm-platform-admin-tile"
+                },
+                "layoutConfig": {
+                  "column": "span 1"
+                }
               }
             ]
           }
