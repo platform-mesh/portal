@@ -15,11 +15,11 @@ concurrency:
 
 jobs:
   test:
-    uses: platform-mesh/.github/.github/workflows/job-node-test.yml@ab6caea57060a3eba5fc58cadbb2aaa1b06da18a
+    uses: platform-mesh/.github/.github/workflows/job-node-test.yml@627a7ad1cb190ad102455c74e97e98e72574bcf9
     secrets: inherit # zizmor: ignore[secrets-inherit]
 
   docker-build:
-    uses: platform-mesh/.github/.github/workflows/job-docker-build.yml@ab6caea57060a3eba5fc58cadbb2aaa1b06da18a
+    uses: platform-mesh/.github/.github/workflows/job-docker-build.yml@627a7ad1cb190ad102455c74e97e98e72574bcf9
     with:
       imageTagName: ghcr.io/platform-mesh/portal
 
