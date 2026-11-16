@@ -2,6 +2,7 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import {
+  AuthConfigService,
   PortalComponent,
   PortalOptions,
   providePortal,
@@ -17,6 +18,7 @@ import {
   UserProfileConfigServiceImpl,
 } from '@platform-mesh/portal-ui-lib/portal-options';
 import { routes } from './app/app.routes';
+import { PMAuthConfigService } from './app/services/pm-auth-config.service';
 import { PMStaticSettingsConfigService } from './app/services/pm-static-settings-config.service';
 import { PMCustomGlobalNodesService } from './app/services/pm-custom-global-nodes.service';
 
@@ -38,6 +40,7 @@ bootstrapApplication(PortalComponent, {
   providers: [
     provideRouter(routes),
     providePortal(portalOptions),
+    { provide: AuthConfigService, useClass: PMAuthConfigService },
     provideZonelessChangeDetection(),
   ],
 }).catch((err) => console.error(err));

@@ -13,6 +13,7 @@ import {
   PMRequestContextProvider,
 } from '@platform-mesh/portal-server-lib/portal-options';
 import { config } from 'dotenv';
+import { PMEnvVariablesProvider } from './env-variables.provider.js';
 import * as path from 'node:path';
 
 const __filename = new URL(import.meta.url).pathname;
@@ -26,6 +27,7 @@ const portalOptions: PortalModuleOptions = {
     '../..',
     'frontend/dist/frontend/browser',
   ),
+  envVariablesProvider: PMEnvVariablesProvider,
   requestContextProvider: PMRequestContextProvider,
   portalContextProvider: PMPortalContextService,
   entityContextProviders: {
