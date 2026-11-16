@@ -9,4 +9,8 @@ module.exports = {
   EnvConfigVariables: class EnvConfigVariables {},
   DiscoveryService: class DiscoveryService {},
   PortalModule: class PortalModule {},
+  CookiesService: class CookiesService {
+    setAuthCookie() {}
+    removeAuthCookie() {}
+  },
 };

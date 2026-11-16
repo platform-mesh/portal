@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
+import {
+  CookiesService,
+  PortalModule,
+  PortalModuleOptions,
+} from '@openmfp/portal-server-lib';
 import {
   AccountEntityContextProvider,
   AuthzWebhookService,
@@ -13,6 +17,7 @@ import {
   PMRequestContextProvider,
 } from '@platform-mesh/portal-server-lib/portal-options';
 import { config } from 'dotenv';
+import { PMCookiesService } from './cookies.service.js';
 import { PMEnvVariablesProvider } from './env-variables.provider.js';
 import * as path from 'node:path';
 
@@ -41,6 +46,7 @@ const portalOptions: PortalModuleOptions = {
     PMAuthConfigProvider,
     PermissionsProxyService,
     AuthzWebhookService,
+    { provide: CookiesService, useClass: PMCookiesService },
   ],
   additionalControllers: [PermissionsController],
   serviceProviderService: KubernetesServiceProvidersService,

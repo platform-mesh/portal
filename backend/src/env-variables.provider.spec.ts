@@ -19,8 +19,18 @@ describe('PMEnvVariablesProvider', () => {
     expect(env).toEqual({ oidc: { scope: 'openid email groups' } });
   });
 
-  it('returns nothing when no OIDC scope is configured', async () => {
+  it('tells the frontend to use the callback of the base domain', async () => {
     delete process.env.OIDC_SCOPE;
+    process.env.OIDC_CALLBACK_ON_BASE_DOMAIN = 'true';
+
+    const env = await new PMEnvVariablesProvider().getEnv();
+
+    expect(env).toEqual({ oidc: { callbackOnBaseDomain: true } });
+  });
+
+  it('returns nothing when OIDC is not configured', async () => {
+    delete process.env.OIDC_SCOPE;
+    delete process.env.OIDC_CALLBACK_ON_BASE_DOMAIN;
 
     const env = await new PMEnvVariablesProvider().getEnv();
 

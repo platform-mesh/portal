@@ -43,6 +43,35 @@ describe('PMAuthConfigService', () => {
     expect(config?.oAuth2AuthCode.oAuthData.scope).toBe('openid');
   });
 
+  it('keeps the callback of the current origin by default', async () => {
+    getEnvConfig.mockResolvedValue({
+      oauthServerUrl: 'https://issuer.example/auth',
+      clientId: 'platform-mesh',
+      baseDomain: 'portal.example',
+    });
+
+    const config = await service.getAuthConfig();
+
+    expect(config?.oAuth2AuthCode.oAuthData.redirect_uri).toBe('/callback');
+  });
+
+  it('uses the callback of the base domain when configured', async () => {
+    getEnvConfig.mockResolvedValue({
+      oauthServerUrl: 'https://issuer.example/auth',
+      clientId: 'platform-mesh',
+      baseDomain: 'portal.example',
+      oidc: { callbackOnBaseDomain: true },
+    });
+    const origin = new URL(window.location.origin);
+    origin.hostname = 'portal.example';
+
+    const config = await service.getAuthConfig();
+
+    expect(config?.oAuth2AuthCode.oAuthData.redirect_uri).toBe(
+      `${origin.origin}/callback`,
+    );
+  });
+
   it('returns no auth config without an authorization endpoint', async () => {
     getEnvConfig.mockResolvedValue({ oidc: { scope: 'openid email groups' } });
 
