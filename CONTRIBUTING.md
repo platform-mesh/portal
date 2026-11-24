@@ -14,6 +14,7 @@ You are welcome to contribute with your pull requests. These steps explain the c
 1. If you've changed APIs, update the documentation. 
 1. Make sure the tests pass. Our GitHub actions pipeline is running the unit and e2e tests for your PR and will indicate any issues.
 1. Sign the Developer Certificate of Origin (DCO).
+1. Give the pull request a [Conventional Commits](https://www.conventionalcommits.org/) title, for example `feat: add a search field to the home page` or `fix: keep the selected account after reload`. The title becomes the squash commit message and the entry in the release notes.
 
 
 ### Running the project locally
@@ -229,6 +230,29 @@ Now every save in the library rebuilds it, pushes it into the portal's `.yalc/`,
 > **NOTE:** You should always add tests, if you are adding code to our repository.
 
 Run `npm test` to execute the unit tests via [Jest](https://jestjs.io/) in the root directory of the repository.
+
+## Releasing
+
+Merging to `main` does not release anything. A release is created by pushing a version tag:
+
+```sh
+git switch main
+git pull
+git tag v1.2.0
+git push origin v1.2.0
+```
+
+- Use `vX.Y.Z` for a release and `vX.Y.Z-rc.N` for a release candidate.
+- Tag a commit on `main`, or on a maintenance branch `release/X.Y` for patch releases of an older version. A maintenance branch only accepts `X.Y.*` versions of its own line.
+- The version must be higher than the last release on the same branch.
+
+For every tag, the release workflow pushes and signs the image `ghcr.io/platform-mesh/portal:<tag>`, publishes its SBOM and OCM component and creates a GitHub release with notes generated from the commit titles. Only a release from `main` updates the `portal` chart's `appVersion` in [platform-mesh/platform-mesh](https://github.com/platform-mesh/platform-mesh), so release candidates and maintenance releases do not change the chart:
+
+| Tag | Branch | GitHub release | Chart `appVersion` |
+|---|---|---|---|
+| `vX.Y.Z` | `main` | latest | updated |
+| `vX.Y.Z-rc.N` | `main` or `release/X.Y` | pre-release | unchanged |
+| `vX.Y.Z` | `release/X.Y` | release | unchanged |
 
 ## Issues
 We use GitHub issues to track bugs. Please ensure your description is

@@ -1,0 +1,20 @@
+name: pr-title
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-title-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  pr-title:
+    uses: platform-mesh/.github/.github/workflows/job-pr-title.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844

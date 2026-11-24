@@ -2,8 +2,8 @@ name: release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 permissions:
   contents: read
@@ -13,19 +13,19 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  test:
-    uses: platform-mesh/.github/.github/workflows/job-node-test.yml@bc940c04f874cb46be445b421b8f6f1622ab61c2 # main
-    secrets: inherit # zizmor: ignore[secrets-inherit]
-
-  create-version:
-    uses: platform-mesh/.github/.github/workflows/job-create-version.yml@bc940c04f874cb46be445b421b8f6f1622ab61c2 # main
-    secrets: inherit # zizmor: ignore[secrets-inherit]
+  version:
+    uses: platform-mesh/.github/.github/workflows/job-tag-version.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844
     permissions:
-      contents: write # Needed to create the version tag/release
+      contents: read
+
+  test:
+    needs: [version]
+    uses: platform-mesh/.github/.github/workflows/job-node-test.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844
+    secrets: inherit # zizmor: ignore[secrets-inherit]
 
   docker-build-push:
-    needs: [create-version, test]
-    uses: platform-mesh/.github/.github/workflows/job-docker-build-push.yml@bc940c04f874cb46be445b421b8f6f1622ab61c2 # main
+    needs: [version, test]
+    uses: platform-mesh/.github/.github/workflows/job-docker-build-push.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844
     secrets: inherit # zizmor: ignore[secrets-inherit]
     permissions:
       contents: write # Needed to update release artifacts
@@ -33,46 +33,59 @@ jobs:
       id-token: write # Needed for OIDC-based image signing
     with:
       imageTagName: ghcr.io/platform-mesh/portal
-      version: ${{ needs.create-version.outputs.version }}
+      version: ${{ needs.version.outputs.tag }}
       multiarch: true
+      createRelease: false
 
   update-version:
-    needs: [create-version, docker-build-push]
-    uses: platform-mesh/.github/.github/workflows/job-chart-version-update.yml@bc940c04f874cb46be445b421b8f6f1622ab61c2 # main
+    needs: [version, docker-build-push]
+    if: ${{ needs.version.outputs.latest == 'true' }}
+    uses: platform-mesh/.github/.github/workflows/job-chart-version-update.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844
     secrets: inherit # zizmor: ignore[secrets-inherit]
     with:
-      appVersion: ${{ needs.create-version.outputs.version }}
+      appVersion: ${{ needs.version.outputs.tag }}
       chart: portal
       targetRepository: platform-mesh/platform-mesh
 
   sbom:
-    needs: [create-version, docker-build-push]
-    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@bc940c04f874cb46be445b421b8f6f1622ab61c2 # main
+    needs: [version, docker-build-push]
+    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844
     permissions:
       contents: read # Needed to read repository contents
       packages: read # Needed to pull the image to generate the SBOM
     with:
-      imageReference: ghcr.io/platform-mesh/portal:${{ needs.create-version.outputs.version }}
+      imageReference: ghcr.io/platform-mesh/portal:${{ needs.version.outputs.tag }}
 
   image-ocm:
-    needs: [create-version, docker-build-push, sbom]
-    uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@bc940c04f874cb46be445b421b8f6f1622ab61c2 # main
+    needs: [version, docker-build-push, sbom]
+    uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844
     secrets: inherit # zizmor: ignore[secrets-inherit]
     permissions:
       contents: read # Needed to read repository contents
       packages: write # Needed to push the OCM component image to GHCR
     with:
-      imageReference: ghcr.io/platform-mesh/portal:${{ needs.create-version.outputs.version }}
-      appVersion: ${{ needs.create-version.outputs.version }}
+      imageReference: ghcr.io/platform-mesh/portal:${{ needs.version.outputs.tag }}
+      appVersion: ${{ needs.version.outputs.tag }}
       repoName: portal
       commit: ${{ github.sha }}
 
   scan-sbom:
-    needs: [create-version, docker-build-push, sbom, image-ocm]
-    uses: platform-mesh/.github/.github/workflows/job-trivy-sbom.yml@bc940c04f874cb46be445b421b8f6f1622ab61c2 # main
+    needs: [version, docker-build-push, sbom, image-ocm]
+    uses: platform-mesh/.github/.github/workflows/job-trivy-sbom.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844
     permissions:
       contents: read # Needed to read repository contents
       packages: read # Needed to pull the image referenced by the SBOM
       security-events: write # Needed to upload Trivy results to code scanning
     with:
-      componentVersion: ${{ needs.create-version.outputs.version }}
+      componentVersion: ${{ needs.version.outputs.tag }}
+
+  github-release:
+    needs: [version, docker-build-push]
+    uses: platform-mesh/.github/.github/workflows/job-github-release.yml@6d83f6cdb7db9f0afe531556b1a753d81d3c5844
+    permissions:
+      contents: write # Needed to create the GitHub release
+    with:
+      tag: ${{ needs.version.outputs.tag }}
+      previousTag: ${{ needs.version.outputs.previousTag }}
+      prerelease: ${{ needs.version.outputs.prerelease == 'true' }}
+      latest: ${{ needs.version.outputs.latest == 'true' }}
