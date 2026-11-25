@@ -14,18 +14,18 @@ concurrency:
 
 jobs:
   version:
-    uses: platform-mesh/.github/.github/workflows/job-tag-version.yml@15b291d550257bc590a89917bfbbe0e30bf08895
+    uses: platform-mesh/.github/.github/workflows/job-tag-version.yml@15b291d550257bc590a89917bfbbe0e30bf08895 # zizmor: ignore[stale-action-refs]
     permissions:
       contents: read
 
   test:
     needs: [version]
-    uses: platform-mesh/.github/.github/workflows/job-node-test.yml@15b291d550257bc590a89917bfbbe0e30bf08895
+    uses: platform-mesh/.github/.github/workflows/job-node-test.yml@15b291d550257bc590a89917bfbbe0e30bf08895 # zizmor: ignore[stale-action-refs]
     secrets: inherit # zizmor: ignore[secrets-inherit]
 
   docker-build-push:
     needs: [version, test]
-    uses: platform-mesh/.github/.github/workflows/job-docker-build-push.yml@15b291d550257bc590a89917bfbbe0e30bf08895
+    uses: platform-mesh/.github/.github/workflows/job-docker-build-push.yml@15b291d550257bc590a89917bfbbe0e30bf08895 # zizmor: ignore[stale-action-refs]
     secrets: inherit # zizmor: ignore[secrets-inherit]
     permissions:
       contents: write # Needed to update release artifacts
@@ -40,7 +40,7 @@ jobs:
   update-version:
     needs: [version, docker-build-push]
     if: ${{ needs.version.outputs.latest == 'true' }}
-    uses: platform-mesh/.github/.github/workflows/job-chart-version-update.yml@15b291d550257bc590a89917bfbbe0e30bf08895
+    uses: platform-mesh/.github/.github/workflows/job-chart-version-update.yml@15b291d550257bc590a89917bfbbe0e30bf08895 # zizmor: ignore[stale-action-refs]
     secrets: inherit # zizmor: ignore[secrets-inherit]
     with:
       appVersion: ${{ needs.version.outputs.tag }}
@@ -49,7 +49,7 @@ jobs:
 
   sbom:
     needs: [version, docker-build-push]
-    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@15b291d550257bc590a89917bfbbe0e30bf08895
+    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@15b291d550257bc590a89917bfbbe0e30bf08895 # zizmor: ignore[stale-action-refs]
     permissions:
       contents: read # Needed to read repository contents
       packages: read # Needed to pull the image to generate the SBOM
@@ -65,7 +65,7 @@ jobs:
       packages: write # Needed to push the OCM component image to GHCR
       id-token: write # Needed for OIDC-based keyless OCM component signing
     steps:
-      - uses: platform-mesh/.github/.github/actions/image-ocm@15b291d550257bc590a89917bfbbe0e30bf08895
+      - uses: platform-mesh/.github/.github/actions/image-ocm@15b291d550257bc590a89917bfbbe0e30bf08895 # zizmor: ignore[stale-action-refs]
         with:
           imageReference: ghcr.io/platform-mesh/portal:${{ needs.version.outputs.tag }}
           appVersion: ${{ needs.version.outputs.tag }}
@@ -74,7 +74,7 @@ jobs:
 
   scan-sbom:
     needs: [version, docker-build-push, sbom, image-ocm]
-    uses: platform-mesh/.github/.github/workflows/job-trivy-sbom.yml@15b291d550257bc590a89917bfbbe0e30bf08895
+    uses: platform-mesh/.github/.github/workflows/job-trivy-sbom.yml@15b291d550257bc590a89917bfbbe0e30bf08895 # zizmor: ignore[stale-action-refs]
     permissions:
       contents: read # Needed to read repository contents
       packages: read # Needed to pull the image referenced by the SBOM
@@ -84,7 +84,7 @@ jobs:
 
   github-release:
     needs: [version, docker-build-push]
-    uses: platform-mesh/.github/.github/workflows/job-github-release.yml@15b291d550257bc590a89917bfbbe0e30bf08895
+    uses: platform-mesh/.github/.github/workflows/job-github-release.yml@15b291d550257bc590a89917bfbbe0e30bf08895 # zizmor: ignore[stale-action-refs]
     permissions:
       contents: write # Needed to create the GitHub release
     with:
